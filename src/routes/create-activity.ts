@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { prisma } from "../lib/prisma"
 import { dayjs } from "../lib/dayjs"
+import { ClientError } from "../errors/client-error"
 
 export async function createActivity(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -26,13 +27,17 @@ export async function createActivity(app: FastifyInstance) {
         where: { id: tripId },
       })
 
-      if (!trip) throw new Error("Could not find this trip.")
+      if (!trip) throw new ClientError("Could not find this trip.")
 
       if (dayjs(occurs_at).isBefore(trip.starts_at))
-        throw new Error("Could not create a activity before trip start date.")
+        throw new ClientError(
+          "Could not create a activity before trip start date."
+        )
 
       if (dayjs(occurs_at).isAfter(trip.ends_at))
-        throw new Error("Could not create a activity after trip end date.")
+        throw new ClientError(
+          "Could not create a activity after trip end date."
+        )
 
       const activity = await prisma.activity.create({
         data: {
