@@ -18,6 +18,9 @@ import { getTripDetails } from "./routes/get-trip-details"
 import { getParticipant } from "./routes/get-participant"
 import { errorHandler } from "./error-handler"
 import { env } from "./env"
+import { deleteActivity } from "./routes/delete-activity"
+import { deleteLink } from "./routes/delete-link"
+import { deleteParticipant } from "./routes/delete-participant"
 
 const app = fastify()
 
@@ -41,14 +44,17 @@ app.register(getTripDetails)
 app.register(confirmParticipant)
 app.register(getParticipants)
 app.register(getParticipant)
+app.register(deleteParticipant)
 
 // Activity =====================
 app.register(createActivity)
 app.register(getActivities)
+app.register(deleteActivity)
 
 // Link =====================
 app.register(createLink)
 app.register(getLinks)
+app.register(deleteLink)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log("Server Running on Port 3333")
