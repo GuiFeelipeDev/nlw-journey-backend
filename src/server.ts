@@ -21,6 +21,7 @@ import { env } from "./env"
 import { deleteActivity } from "./routes/delete-activity"
 import { deleteLink } from "./routes/delete-link"
 import { deleteParticipant } from "./routes/delete-participant"
+import { verifyParticipant } from "./routes/verify-participant"
 
 const app = fastify()
 
@@ -45,6 +46,7 @@ app.register(confirmParticipant)
 app.register(getParticipants)
 app.register(getParticipant)
 app.register(deleteParticipant)
+app.register(verifyParticipant)
 
 // Activity =====================
 app.register(createActivity)
