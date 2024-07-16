@@ -30,17 +30,17 @@ export async function updateTrip(app: FastifyInstance) {
         },
       })
 
-      if (!trip) throw new Error("Could not find a trip with this ID .")
+      if (!trip) throw new ClientError("Could not find a trip with this ID .")
 
       if (!!starts_at) {
         if (dayjs(starts_at).isBefore(new Date())) {
-          throw new Error("Invalid trip start date.")
+          throw new ClientError("Invalid trip start date.")
         }
       }
 
       if (!!starts_at) {
         if (dayjs(starts_at).isAfter(ends_at ?? trip.ends_at)) {
-          throw new Error(
+          throw new ClientError(
             "You could not change a start date to after the end date."
           )
         }
