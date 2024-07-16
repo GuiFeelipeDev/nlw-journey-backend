@@ -3,43 +3,60 @@ import { ZodTypeProvider } from "fastify-type-provider-zod"
 import z from "zod"
 import { prisma } from "../lib/prisma"
 import { ClientError } from "../errors/client-error"
-import { env } from "../env"
 
 export async function confirmParticipant(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().get(
-    "/participants/:participantId/confirm",
+  app.withTypeProvider<ZodTypeProvider>().post(
+    "/participants/:tripId/confirm",
     {
       schema: {
         params: z.object({
-          participantId: z.string().uuid(),
+          tripId: z.string().uuid(),
+        }),
+        body: z.object({
+          name: z.string(),
+          email: z.string().email(),
         }),
       },
     },
     async (req, reply) => {
-      const { participantId } = req.params
+      const { tripId } = req.params
+      const { name, email } = req.body
 
-      const participant = await prisma.participant.findUnique({
+      const trip = await prisma.trip.findUnique({
         where: {
-          id: participantId,
+          id: tripId,
+        },
+        include: {
+          participants: {
+            select: {
+              id: true,
+              email: true,
+              is_confirmed: true,
+            },
+          },
         },
       })
 
-      if (!participant)
-        throw new ClientError("Could not find a participant with this ID.")
+      if (!trip) throw new ClientError("Could not find a trip with this ID.")
 
-      if (participant.is_confirmed)
-        return reply.redirect(
-          env.WEB_BASE_URL + "/trips/" + participant.trip_id
-        )
+      const participantExists = trip.participants.find(
+        (participant) => participant.email === email
+      )
+
+      if (!participantExists)
+        throw new ClientError("Could not find a participant with this email.")
+
+      if (participantExists.is_confirmed)
+        return { message: "Participant is already confirmed." }
 
       await prisma.participant.update({
         where: {
-          id: participantId,
+          id: participantExists.id,
         },
-        data: { is_confirmed: true },
+        data: { is_confirmed: true, name },
       })
 
-      return reply.redirect(env.WEB_BASE_URL + "/trips/" + participant.trip_id)
+      return { message: "Participant confirmed successfully." }
     }
   )
 }
