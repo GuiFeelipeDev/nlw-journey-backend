@@ -51,6 +51,6 @@ app.register(delete_activity_1.deleteActivity);
 app.register(create_link_1.createLink);
 app.register(get_links_1.getLinks);
 app.register(delete_link_1.deleteLink);
-app.listen({ port: env_1.env.PORT }).then(() => {
+app.listen({ port: env_1.env.PORT || 3333 }).then(() => {
     console.log("Server Running on Port 3333");
 });

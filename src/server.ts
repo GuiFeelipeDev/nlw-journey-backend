@@ -58,6 +58,6 @@ app.register(createLink)
 app.register(getLinks)
 app.register(deleteLink)
 
-app.listen({ port: env.PORT }).then(() => {
+app.listen({ port: env.PORT || 3333 }).then(() => {
   console.log("Server Running on Port 3333")
 })
