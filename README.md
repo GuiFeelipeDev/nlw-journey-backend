@@ -5,7 +5,7 @@
 [SQLITE__BADGE]: https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white
 [ZOD__BADGE]: https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white
 
-<h1 align="center" style="font-weight: bold;">Project name 💻</h1>
+<h1 align="center" style="font-weight: bold;">Plann.er backend 💻</h1>
 
 ![fastify][FASTIFY__BADGE]
 ![typescript][TYPESCRIPT__BADGE]
