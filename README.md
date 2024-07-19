@@ -4,10 +4,12 @@
 [PRISMA__BADGE]: https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white
 [SQLITE__BADGE]: https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white
 [ZOD__BADGE]: https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white
+[NODE__BADGE]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
 
 <h1 align="center" style="font-weight: bold;">Plann.er backend 💻</h1>
 
 ![fastify][FASTIFY__BADGE]
+![nodejs][NODE__BADGE]
 ![typescript][TYPESCRIPT__BADGE]
 ![render][RENDER__BADGE]
 ![prisma][PRISMA__BADGE]
